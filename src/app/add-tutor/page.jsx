@@ -18,26 +18,19 @@ const AddTutorPage = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-
-    // Convert FormData to object
     const tutorData = Object.fromEntries(formData.entries());
 
-    // Convert 24h time to 12h format
     const formatTime = (time) => {
       const [hour, minute] = time.split(":");
 
       const h = hour % 12 || 12;
       const ampm = hour >= 12 ? "PM" : "AM";
-
       return `${h}:${minute} ${ampm}`;
     };
 
-    // Create formatted availableTime
     tutorData.availableTime = `${formatTime(
       tutorData.startTime,
     )} - ${formatTime(tutorData.endTime)}`;
-
-    console.log(tutorData);
 
     try {
       const res = await fetch("http://localhost:7000/tutors", {
@@ -47,22 +40,18 @@ const AddTutorPage = () => {
         },
         body: JSON.stringify(tutorData),
       });
-
       const data = await res.json();
-
       console.log(data);
 
       e.target.reset();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-10">
-      <h2 className="text-4xl font-bold mb-6">Add Tutor</h2>
+    <div className="max-w-6xl mx-auto py-10">
+      <h2 className="text-4xl font-bold mb-6 text-center">Add Tutor</h2>
 
-      <Card>
+      <Card className="border">
         <form onSubmit={onSubmit} className="p-10 space-y-8 w-full mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Tutor Name */}
@@ -70,7 +59,7 @@ const AddTutorPage = () => {
               <TextField name="tutorName" isRequired>
                 <Label>Tutor Name</Label>
 
-                <Input placeholder="John Doe" className="rounded-2xl" />
+                <Input placeholder="Enter your name" className="rounded-2xl" />
 
                 <FieldError />
               </TextField>
@@ -109,15 +98,10 @@ const AddTutorPage = () => {
                 <Select.Popover>
                   <ListBox>
                     <ListBox.Item id="Mathematics">Mathematics</ListBox.Item>
-
                     <ListBox.Item id="Physics">Physics</ListBox.Item>
-
                     <ListBox.Item id="Chemistry">Chemistry</ListBox.Item>
-
                     <ListBox.Item id="English">English</ListBox.Item>
-
                     <ListBox.Item id="Programming">Programming</ListBox.Item>
-
                     <ListBox.Item id="Biology">Biology</ListBox.Item>
                   </ListBox>
                 </Select.Popover>
@@ -127,90 +111,70 @@ const AddTutorPage = () => {
             {/* Price */}
             <TextField name="price" type="number" isRequired>
               <Label>Hourly Fee (USD)</Label>
-
               <Input type="number" placeholder="25" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Available Days */}
             <TextField name="availableDays" isRequired>
               <Label>Available Days</Label>
-
               <Input placeholder="Sun - Thu" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Start Time */}
             <TextField name="startTime" isRequired>
               <Label>Start Time</Label>
-
               <Input type="time" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* End Time */}
             <TextField name="endTime" isRequired>
               <Label>End Time</Label>
-
               <Input type="time" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Total Slot */}
             <TextField name="totalSlot" type="number" isRequired>
               <Label>Total Slot</Label>
-
               <Input type="number" placeholder="10" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Session Start Date */}
             <TextField name="sessionStartDate" type="date" isRequired>
               <Label>Session Start Date</Label>
-
               <Input type="date" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Session Close Date */}
             <TextField name="sessionCloseDate" type="date" isRequired>
               <Label>Session Close Date</Label>
-
               <Input type="date" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Institution */}
             <TextField name="institution" isRequired>
               <Label>Institution</Label>
-
               <Input placeholder="Dhaka University" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Experience */}
             <TextField name="experience" isRequired>
               <Label>Experience</Label>
-
               <Input placeholder="5 Years" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
             {/* Location */}
             <TextField name="location" isRequired>
               <Label>Location</Label>
-
               <Input placeholder="Dhaka, Bangladesh" className="rounded-2xl" />
-
               <FieldError />
             </TextField>
 
@@ -223,18 +187,14 @@ const AddTutorPage = () => {
                 placeholder="Select mode"
               >
                 <Label>Teaching Mode</Label>
-
                 <Select.Trigger className="rounded-2xl">
                   <Select.Value />
                   <Select.Indicator />
                 </Select.Trigger>
-
                 <Select.Popover>
                   <ListBox>
                     <ListBox.Item id="Online">Online</ListBox.Item>
-
                     <ListBox.Item id="Offline">Offline</ListBox.Item>
-
                     <ListBox.Item id="Both">Both</ListBox.Item>
                   </ListBox>
                 </Select.Popover>

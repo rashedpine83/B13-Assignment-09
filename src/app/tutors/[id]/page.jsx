@@ -1,9 +1,107 @@
-import React from "react";
+import { BookingModal } from "@/components/BookingModal";
+import Image from "next/image";
+import { Clock, Users } from "lucide-react";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdEventAvailable } from "react-icons/md";
 
-const TutorDetails = () => {
+const TutorDetails = async ({ params }) => {
+  const { id } = await params;
+
+  const res = await fetch(`http://localhost:7000/tutors/${id}`, {
+    cache: "no-store",
+  });
+
+  const tutor = await res.json();
+
+  const {
+    tutorName,
+    photo,
+    availableDays,
+    price,
+    availableTime,
+    location,
+    subject,
+    institution,
+    experience,
+    teachingMode,
+    sessionStartDate,
+    sessionCloseDate,
+    totalSlot,
+  } = tutor;
+
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
+  const featuredItems = [
+    { icon: Clock, label: availableTime },
+    { icon: MdEventAvailable, label: availableDays },
+    { icon: FaLocationDot, label: location },
+    { icon: Users, label: `${tutor?.enrolled || 0} Students` },
+  ];
+
   return (
-    <div>
-      <h2>Tutor Details Page</h2>
+    <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+        {/* LEFT SIDE */}
+        <div className="lg:col-span-2 space-y-8">
+          <div className="relative group overflow-hidden rounded-[2.5rem] shadow-2xl aspect-video">
+            <Image src={photo} alt={tutorName} fill className="object-cover" />
+          </div>
+
+          <div>
+            <h1 className="text-4xl font-black text-slate-900">{tutorName}</h1>
+            <p className="text-xl text-slate-500">{subject}</p>
+          </div>
+
+          <div className="flex flex-wrap gap-4 pt-6 border-t">
+            {featuredItems.map((item, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 bg-slate-100 px-5 py-3 rounded-xl"
+              >
+                <item.icon className="w-5 h-5 text-blue-600" />
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="sticky top-24 bg-white p-8 rounded-2xl shadow-xl space-y-6">
+          <div>
+            <p className="text-sm text-slate-500">Hourly Price</p>
+            <span className="text-4xl font-black text-blue-600">${price}</span>
+          </div>
+
+          <div className="space-y-2 text-slate-600">
+            <p>
+              <b>Institution:</b> {institution}
+            </p>
+            <p>
+              <b>Experience:</b> {experience}
+            </p>
+            <p>
+              <b>Teaching Mode:</b> {teachingMode}
+            </p>
+            <p>
+              <b>Session Start:</b> {formatDate(sessionStartDate)}
+            </p>
+            <p>
+              <b>Session Close:</b> {formatDate(sessionCloseDate)}
+            </p>
+            <p>
+              <b>Remaining Slot:</b> {totalSlot}
+            </p>
+          </div>
+
+          {/* PASS FULL TUTOR */}
+          <BookingModal tutor={tutor} />
+        </div>
+      </div>
     </div>
   );
 };

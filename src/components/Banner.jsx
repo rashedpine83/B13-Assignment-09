@@ -159,16 +159,20 @@ const Banner = () => {
                   flexible learning sessions, and grow with confidence from
                   anywhere.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 pt-4 ">
+
+                <div className="flex flex-col sm:flex-row gap-4 pt-4 group">
                   <Button
                     href="/courses"
                     size="lg"
-                    className="h-14 px-10 text-lg font-bold rounded-full shadow-2xl shadow-blue-600/30 group bg-linear-to-r from-[#8B6508] to-[#D4A017] "
+                    className="h-14 px-10 text-lg font-bold rounded-full shadow-2xl shadow-blue-600/30 
+    bg-linear-to-r from-[#8B6508] to-[#D4A017]
+    transition-all duration-300 group-hover:scale-105"
                   >
-                    Explore Courses{" "}
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    Explore Courses
+                    <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                   </Button>
                 </div>
+
                 <div className="flex items-center gap-6 pt-6 grayscale opacity-60">
                   <Link href={"/#"}>
                     <BsFacebook className="w-10 h-10" />
