@@ -45,6 +45,18 @@ const AddTutorPage = () => {
 
       e.target.reset();
     } catch (error) {}
+
+    try {
+      const res = await fetch("http://localhost:7000/newtutors", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tutorData),
+      });
+      const data = await res.json();
+      e.target.reset();
+    } catch (error) {}
   };
 
   return (

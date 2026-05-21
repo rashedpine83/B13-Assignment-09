@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertDialog, Button } from "@heroui/react";
-import { X } from "lucide-react";
+
 import { IoTrashBin } from "react-icons/io5";
 
 export function DeleteAlert({ tutor }) {
@@ -9,20 +9,18 @@ export function DeleteAlert({ tutor }) {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`http://localhost:7000/tutors/${_id}`, {
+      await fetch(`http://localhost:7000/newTutors/${_id}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
-      const data = await res.json();
-      console.log("Deleted:", data);
+      await fetch(`http://localhost:7000/tutors/${_id}`, {
+        method: "DELETE",
+      });
 
-      if (res.ok) {
-        window.location.reload(); // refresh list after delete
-      }
-    } catch (error) {}
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

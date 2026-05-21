@@ -3,7 +3,7 @@ import { Button, Table } from "@heroui/react";
 import { Edit } from "lucide-react";
 
 const MyTutorPage = async () => {
-  const res = await fetch("http://localhost:7000/tutors");
+  const res = await fetch("http://localhost:7000/newTutors");
   const tutors = await res.json();
 
   return (
@@ -21,33 +21,53 @@ const MyTutorPage = async () => {
               <Table.Column>Total Slot</Table.Column>
               <Table.Column className={"text-center"}>Action</Table.Column>
             </Table.Header>
+
             <Table.Body>
-              {tutors?.map((tutor, index) => (
-                <Table.Row key={index}>
-                  <Table.Cell>{tutor.tutorName}</Table.Cell>
+              {tutors?.length > 0 ? (
+                tutors.map((tutor, index) => (
+                  <Table.Row key={index}>
+                    <Table.Cell>{tutor.tutorName}</Table.Cell>
 
-                  <Table.Cell>{tutor.subject}</Table.Cell>
+                    <Table.Cell>{tutor.subject}</Table.Cell>
 
+                    <Table.Cell>
+                      {tutor.startTime}-{tutor.endTime}
+                    </Table.Cell>
+
+                    <Table.Cell className={"text-center"}>
+                      ${tutor.price}
+                    </Table.Cell>
+
+                    <Table.Cell className={"text-center"}>
+                      {tutor.totalSlot}
+                    </Table.Cell>
+
+                    <Table.Cell
+                      className={"flex justify-center items-center gap-2"}
+                    >
+                      <DeleteAlert tutor={tutor} />
+
+                      <Button className={"text-green-600 bg-white"}>
+                        <Edit />
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                ))
+              ) : (
+                <Table.Row>
                   <Table.Cell>
-                    {tutor.startTime}-{tutor.endTime}
+                    <p className="text-center py-10 text-red-500 text-3xl flex justify-center">
+                      No tutor available
+                    </p>
                   </Table.Cell>
 
-                  <Table.Cell className={"text-center"}>
-                    ${tutor.price}
-                  </Table.Cell>
-                  <Table.Cell className={"text-center"}>
-                    {tutor.totalSlot}
-                  </Table.Cell>
-                  <Table.Cell
-                    className={"flex justify-center items-center gap-2"}
-                  >
-                    <DeleteAlert tutor={tutor} />
-                    <Button className={"text-green-600 bg-white"}>
-                      <Edit />
-                    </Button>
-                  </Table.Cell>
+                  <Table.Cell />
+                  <Table.Cell />
+                  <Table.Cell />
+                  <Table.Cell />
+                  <Table.Cell />
                 </Table.Row>
-              ))}
+              )}
             </Table.Body>
           </Table.Content>
         </Table.ScrollContainer>
