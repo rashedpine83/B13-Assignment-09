@@ -1,6 +1,6 @@
 import { DeleteAlert } from "@/components/DeleteAlert";
-import { Button, Table } from "@heroui/react";
-import { Edit } from "lucide-react";
+import { EditModalMyTutor } from "@/components/EditModal";
+import { Table } from "@heroui/react";
 
 const MyTutorPage = async () => {
   const res = await fetch("http://localhost:7000/newTutors");
@@ -46,10 +46,8 @@ const MyTutorPage = async () => {
                       className={"flex justify-center items-center gap-2"}
                     >
                       <DeleteAlert tutor={tutor} />
-
-                      <Button className={"text-green-600 bg-white"}>
-                        <Edit />
-                      </Button>
+                      {/* edit modal */}
+                      <EditModalMyTutor tutor={tutor} />
                     </Table.Cell>
                   </Table.Row>
                 ))

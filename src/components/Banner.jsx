@@ -46,14 +46,15 @@ const Banner = () => {
                   anywhere.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 pt-4 ">
-                  <Button
-                    href="/courses"
-                    size="lg"
-                    className="h-14 px-10 text-lg font-bold rounded-full shadow-2xl shadow-blue-600/30 group bg-linear-to-r from-[#8B6508] to-[#D4A017] "
-                  >
-                    Explore Courses{" "}
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link href="/tutors">
+                    <Button
+                      size="lg"
+                      className="h-14 px-10 text-lg font-bold rounded-full shadow-2xl shadow-blue-600/30 group bg-linear-to-r from-[#8B6508] to-[#D4A017] "
+                    >
+                      Explore All Tutors{" "}
+                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                 </div>
                 <div className="flex items-center gap-6 pt-6 grayscale opacity-60">
                   <Link href={"/#"}>

@@ -97,7 +97,12 @@ export function BookingModal({ tutor }) {
             <Modal.Body className="p-6">
               <Surface variant="default">
                 <form onSubmit={onSubmit} className="flex flex-col gap-4">
-                  <TextField className="w-full" name="name" type="text">
+                  <TextField
+                    defaultValue={user?.name}
+                    className="w-full"
+                    name="name"
+                    type="text"
+                  >
                     <Label>Name</Label>
                     <Input placeholder="Enter your name" required />
                   </TextField>
