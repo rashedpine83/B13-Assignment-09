@@ -242,7 +242,7 @@ export default function MainNavbar() {
                   </Link>
 
                   <Link href="/register" onClick={handleMobileNav}>
-                    <Button className="rounded-lg w-full text-sm py-2 bg-gradient-to-r from-[#0c2461] to-[#4a69bd] text-white">
+                    <Button className="rounded-lg w-full text-sm py-2 bg-linear-to-r from-[#0c2461] to-[#4a69bd] text-white">
                       Join
                     </Button>
                   </Link>
