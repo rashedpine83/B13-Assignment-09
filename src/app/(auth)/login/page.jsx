@@ -1,6 +1,12 @@
 "use client";
 
-import { Button, Input } from "@heroui/react";
+import {
+  Button,
+  Description,
+  FieldError,
+  Input,
+  TextField,
+} from "@heroui/react";
 
 import Link from "next/link";
 
@@ -79,7 +85,18 @@ export default function LogInPage() {
             </div>
 
             <form onSubmit={onSubmit} className="space-y-6">
-              <div className="space-y-2">
+              <TextField
+                className="space-y-2"
+                isRequired
+                name="email"
+                type="email"
+                validate={(value) => {
+                  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                    return "Please enter a valid email address";
+                  }
+                  return null;
+                }}
+              >
                 <label
                   htmlFor="email"
                   className="text-sm font-bold text-slate-700 ml-1"
@@ -87,17 +104,31 @@ export default function LogInPage() {
                   Email Address
                 </label>
                 <Input
-                  id="email"
-                  required
-                  placeholder="Enter your email"
-                  type="email"
-                  name="email"
+                  placeholder="john@example.com"
                   startadornment={<Mail className="w-5 h-5 text-slate-400" />}
                   className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-10 bg-white w-full rounded-2xl"
                 />
-              </div>
+              </TextField>
 
-              <div className="space-y-2">
+              <TextField
+                className="space-y-2"
+                isRequired
+                minLength={8}
+                name="password"
+                type="password"
+                validate={(value) => {
+                  if (value.length < 8) {
+                    return "Password must be at least 8 characters";
+                  }
+                  if (!/[A-Z]/.test(value)) {
+                    return "Password must contain at least one uppercase letter";
+                  }
+                  if (!/[0-9]/.test(value)) {
+                    return "Password must contain at least one number";
+                  }
+                  return null;
+                }}
+              >
                 <label
                   htmlFor="password"
                   className="text-sm font-bold text-slate-700 ml-1"
@@ -105,15 +136,15 @@ export default function LogInPage() {
                   Password
                 </label>
                 <Input
-                  id="password"
-                  required
-                  placeholder="••••••••"
-                  type="password"
-                  name="password"
-                  startadornment={<Lock className="w-5 h-5 text-slate-400" />}
+                  placeholder="Enter your password"
+                  startadornment={<Mail className="w-5 h-5 text-slate-400" />}
                   className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-10 bg-white w-full rounded-2xl"
                 />
-              </div>
+                <Description>
+                  Must be at least 8 characters with 1 uppercase and 1 number
+                </Description>
+                <FieldError />
+              </TextField>
               <div className="flex justify-end">
                 <Link
                   href="#"
