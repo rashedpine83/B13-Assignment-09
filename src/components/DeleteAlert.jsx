@@ -9,11 +9,11 @@ export function DeleteAlert({ tutor }) {
 
   const handleDelete = async () => {
     try {
-      await fetch(`http://localhost:7000/newTutors/${_id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/newTutors/${_id}`, {
         method: "DELETE",
       });
 
-      await fetch(`http://localhost:7000/tutors/${_id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${_id}`, {
         method: "DELETE",
       });
 

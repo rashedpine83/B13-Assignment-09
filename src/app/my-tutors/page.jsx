@@ -3,7 +3,7 @@ import { EditModalMyTutor } from "@/components/EditModal";
 import { Table } from "@heroui/react";
 
 const MyTutorPage = async () => {
-  const res = await fetch("http://localhost:7000/newTutors");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/newTutors`);
   const tutors = await res.json();
 
   return (

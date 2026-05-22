@@ -53,26 +53,32 @@ export function EditModalMyTutor({ tutor }) {
     )} - ${formatTime(tutorData.endTime)}`;
 
     try {
-      const res = await fetch(`http://localhost:7000/tutors/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(tutorData),
         },
-        body: JSON.stringify(tutorData),
-      });
+      );
       const data = await res.json();
       router.refresh();
       e.target.reset();
     } catch (error) {}
 
     try {
-      const res = await fetch(`http://localhost:7000/newtutors/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/newtutors/${_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(tutorData),
         },
-        body: JSON.stringify(tutorData),
-      });
+      );
       const data = await res.json();
       router.refresh();
       e.target.reset();

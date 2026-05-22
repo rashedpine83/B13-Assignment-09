@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 
 import React from "react";
+import toast from "react-hot-toast";
 
 const AddTutorPage = () => {
   const onSubmit = async (e) => {
@@ -33,7 +34,7 @@ const AddTutorPage = () => {
     )} - ${formatTime(tutorData.endTime)}`;
 
     try {
-      const res = await fetch("http://localhost:7000/tutors", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutors`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,20 +42,24 @@ const AddTutorPage = () => {
         body: JSON.stringify(tutorData),
       });
       const data = await res.json();
-      console.log(data);
+      toast.success("Tutor add Successfull");
 
       e.target.reset();
     } catch (error) {}
 
     try {
-      const res = await fetch("http://localhost:7000/newtutors", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/newtutors`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(tutorData),
         },
-        body: JSON.stringify(tutorData),
-      });
+      );
       const data = await res.json();
+      toast.success("Tutor add Successfull");
       e.target.reset();
     } catch (error) {}
   };
@@ -120,13 +125,6 @@ const AddTutorPage = () => {
               </Select>
             </div>
 
-            {/* Price */}
-            <TextField name="price" type="number" isRequired>
-              <Label>Hourly Fee (USD)</Label>
-              <Input type="number" placeholder="25" className="rounded-2xl" />
-              <FieldError />
-            </TextField>
-
             {/* Available Days */}
             <TextField name="availableDays" isRequired>
               <Label>Available Days</Label>
@@ -145,6 +143,13 @@ const AddTutorPage = () => {
             <TextField name="endTime" isRequired>
               <Label>End Time</Label>
               <Input type="time" className="rounded-2xl" />
+              <FieldError />
+            </TextField>
+
+            {/* Price */}
+            <TextField name="price" type="number" isRequired>
+              <Label>Hourly Fee (USD)</Label>
+              <Input type="number" placeholder="25" className="rounded-2xl" />
               <FieldError />
             </TextField>
 

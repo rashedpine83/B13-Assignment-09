@@ -9,9 +9,12 @@ const MyBookingPage = async () => {
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:7000/booking/${user.id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${user.id}`,
+    {
+      cache: "no-store",
+    },
+  );
 
   const bookings = await res.json();
 

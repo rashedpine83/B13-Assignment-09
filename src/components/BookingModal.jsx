@@ -4,11 +4,14 @@ import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export function BookingModal({ tutor }) {
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
 
-  const [remainingSlot, setRemainingSlot] = useState(tutor.totalSlot);
+  const [remainingSlot, setRemainingSlot] = useState(Number(tutor.totalSlot));
 
   const { _id, photo, price, location, subject, tutorName, sessionCloseDate } =
     tutor;
@@ -16,9 +19,17 @@ export function BookingModal({ tutor }) {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  const isExpired = new Date(sessionCloseDate) < new Date();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const isDisabled = remainingSlot <= 0 || isExpired;
+  const closeDate = new Date(sessionCloseDate);
+  closeDate.setHours(0, 0, 0, 0);
+
+  const isExpired = closeDate < today;
+
+  const isSlotFull = Number(remainingSlot) <= 0;
+
+  const isDisabled = isExpired || isSlotFull;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -41,46 +52,73 @@ export function BookingModal({ tutor }) {
       tutorSubject: subject,
       tutorLocation: location,
       tutorPrice: price,
+      status: "pending",
+      bookingDate: new Date(),
     };
 
     try {
-      const res = await fetch("http://localhost:7000/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingData),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookingData),
+        },
+      );
 
       const data = await res.json();
 
-      if (res.ok) {
-        toast.success("Booking successful");
-
-        setRemainingSlot((prev) => prev - 1);
-
-        setOpen(false);
-        e.target.reset();
-      } else {
+      if (!res.ok) {
         toast.error(data?.message || "Booking failed");
+        return;
       }
+
+      const slotRes = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/slot/${_id}`,
+        {
+          method: "PATCH",
+        },
+      );
+
+      const slotData = await slotRes.json();
+
+      if (!slotRes.ok) {
+        toast.error(slotData?.message || "Slot update failed");
+        return;
+      }
+
+      setRemainingSlot((prev) => Number(prev) - 1);
+
+      toast.success("Booking successful");
+
+      setOpen(false);
+      e.target.reset();
+
+      router.refresh();
     } catch (error) {
-      toast.error("Booking failed");
+      toast.error("Something went wrong");
     }
   };
 
   return (
     <Modal isOpen={open} onOpenChange={setOpen}>
+      {/* BUTTON */}
       <Button
-        onPress={() => setOpen(true)}
         variant="secondary"
         disabled={isDisabled}
+        onPress={() => {
+          if (!isDisabled) setOpen(true);
+        }}
+        className={isDisabled ? "opacity-50 cursor-not-allowed" : ""}
       >
         {isExpired
           ? "Session Closed"
-          : remainingSlot <= 0
+          : isSlotFull
             ? "No Slot Available"
             : "Book Session"}
       </Button>
 
+      {/* MODAL */}
       <Modal.Backdrop>
         <Modal.Container placement="auto">
           <Modal.Dialog className="sm:max-w-md">
@@ -97,44 +135,35 @@ export function BookingModal({ tutor }) {
             <Modal.Body className="p-6">
               <Surface variant="default">
                 <form onSubmit={onSubmit} className="flex flex-col gap-4">
-                  <TextField
-                    defaultValue={user?.name}
-                    className="w-full"
-                    name="name"
-                    type="text"
-                  >
+                  <TextField defaultValue={user?.name} name="name">
                     <Label>Name</Label>
-                    <Input placeholder="Enter your name" required />
+                    <Input required />
                   </TextField>
 
-                  <TextField
-                    defaultValue={user?.email}
-                    className="w-full"
-                    name="email"
-                    type="email"
-                  >
+                  <TextField defaultValue={user?.email} name="email">
                     <Label>Email</Label>
-                    <Input placeholder="Enter your email" required />
+                    <Input required />
                   </TextField>
 
-                  <TextField className="w-full" name="phone" type="tel">
+                  <TextField name="phone">
                     <Label>Phone</Label>
-                    <Input placeholder="Enter your phone number" required />
+                    <Input required />
                   </TextField>
 
-                  <TextField
-                    defaultValue={tutorName}
-                    className="w-full"
-                    name="tutor"
-                  >
+                  <TextField defaultValue={tutorName} name="tutor">
                     <Label>Tutor Name</Label>
                     <Input readOnly />
                   </TextField>
 
-                  <TextField className="w-full" name="message">
+                  <TextField name="message">
                     <Label>Reading Mode</Label>
-                    <Input placeholder="Online / Offline" required />
+                    <Input required placeholder="Online / Offline" />
                   </TextField>
+
+                  <div className="text-sm text-slate-500">
+                    Remaining Slot:
+                    <span className="font-semibold ml-1">{remainingSlot}</span>
+                  </div>
 
                   <Modal.Footer>
                     <Button type="button" onPress={() => setOpen(false)}>
@@ -144,7 +173,7 @@ export function BookingModal({ tutor }) {
                     <Button type="submit" disabled={isDisabled}>
                       {isExpired
                         ? "Session Closed"
-                        : remainingSlot <= 0
+                        : isSlotFull
                           ? "No Slots"
                           : "Book Confirm"}
                     </Button>

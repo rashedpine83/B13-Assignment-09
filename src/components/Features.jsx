@@ -2,7 +2,7 @@ import React from "react";
 import TutorCard from "./TutorCard";
 
 const Features = async () => {
-  const res = await fetch("http://localhost:7000/features");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/features`);
   const tutors = await res.json();
   return (
     <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">

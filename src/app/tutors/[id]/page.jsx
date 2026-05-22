@@ -7,9 +7,12 @@ import { MdEventAvailable } from "react-icons/md";
 const TutorDetails = async ({ params }) => {
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:7000/tutors/${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${id}`,
+    {
+      cache: "no-store",
+    },
+  );
 
   const tutor = await res.json();
 
@@ -36,6 +39,12 @@ const TutorDetails = async ({ params }) => {
       year: "numeric",
     });
 
+  // session close check
+  const isSessionClosed = new Date(sessionCloseDate) < new Date();
+
+  // button disable check
+  const isBookingDisabled = totalSlot === 0 || isSessionClosed;
+
   const featuredItems = [
     { icon: Clock, label: availableTime },
     { icon: MdEventAvailable, label: availableDays },
@@ -54,6 +63,7 @@ const TutorDetails = async ({ params }) => {
 
           <div>
             <h1 className="text-4xl font-black text-slate-900">{tutorName}</h1>
+
             <p className="text-xl text-slate-500">{subject}</p>
           </div>
 
@@ -74,6 +84,7 @@ const TutorDetails = async ({ params }) => {
         <div className="sticky top-24 bg-white p-8 rounded-2xl shadow-xl space-y-6">
           <div>
             <p className="text-sm text-slate-500">Hourly Price</p>
+
             <span className="text-4xl font-black text-blue-600">${price}</span>
           </div>
 
@@ -81,25 +92,37 @@ const TutorDetails = async ({ params }) => {
             <p>
               <b>Institution:</b> {institution}
             </p>
+
             <p>
               <b>Experience:</b> {experience}
             </p>
+
             <p>
               <b>Teaching Mode:</b> {teachingMode}
             </p>
+
             <p>
               <b>Session Start:</b> {formatDate(sessionStartDate)}
             </p>
+
             <p>
               <b>Session Close:</b> {formatDate(sessionCloseDate)}
             </p>
+
             <p>
               <b>Remaining Slot:</b> {totalSlot}
             </p>
+
+            {totalSlot === 0 && (
+              <p className="text-red-500 font-semibold">No Slot Available</p>
+            )}
+
+            {isSessionClosed && (
+              <p className="text-red-500 font-semibold">Session Closed</p>
+            )}
           </div>
 
-          {/* PASS FULL TUTOR */}
-          <BookingModal tutor={tutor} />
+          <BookingModal tutor={tutor} disabled={isBookingDisabled} />
         </div>
       </div>
     </div>

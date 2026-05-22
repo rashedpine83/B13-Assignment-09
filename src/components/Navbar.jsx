@@ -8,6 +8,7 @@ import NavLink from "./NavLink";
 import { signOut, useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/react";
+import ThemeSwitch from "./ThemeSwitch";
 
 export default function MainNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -108,9 +109,9 @@ export default function MainNavbar() {
                 <Link href="/signup">
                   <Button
                     color="primary"
-                    className="font-bold rounded-full px-8 shadow-lg shadow-blue-600/20"
+                    className="font-bold rounded-full px-8 shadow-lg shadow-blue-600/20 bg-[#0c2461]"
                   >
-                    Join Free
+                    Sign Up Free
                   </Button>
                 </Link>
               </>
@@ -162,6 +163,7 @@ export default function MainNavbar() {
                 </div>
               </div>
             )}
+            <ThemeSwitch />
           </div>
 
           <div className="md:hidden flex items-center">

@@ -1,17 +1,32 @@
 import TutorCard from "@/components/TutorCard";
 import TutorHeader from "@/components/TutorHeader";
-import { Button } from "@heroui/react";
-import { Filter } from "lucide-react";
-import React from "react";
 import { BiBookOpen } from "react-icons/bi";
 
-const TutorsPage = async () => {
-  const res = await fetch("http://localhost:7000/tutors");
-  const tutors = await res.json();
+const fetchTutors = async (search = "") => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors?search=${search}`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch tutors");
+  }
+
+  return res.json();
+};
+const TutorsPage = async ({ searchParams }) => {
+  const search = await searchParams;
+
+  let tutors = [];
+
+  try {
+    tutors = await fetchTutors(search?.search);
+  } catch (error) {}
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
       <TutorHeader />
 
       <main className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
@@ -20,13 +35,6 @@ const TutorsPage = async () => {
             <BiBookOpen className="w-6 h-6 text-[#D4A017]" />
             All Tutors
           </h2>
-          <Button
-            variant="flat"
-            startContent={<Filter className="w-4 h-4" />}
-            className="rounded-full font-bold"
-          >
-            Filters
-          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
