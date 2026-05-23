@@ -73,7 +73,7 @@ const Banner = () => {
                 <div className="absolute -inset-1 bg-linear-to-r from-primary to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                 <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-video lg:aspect-square">
                   <Image
-                    src="https://i.ibb.co.com/QvShD3zv/ahmed-hindawi-bj-B2m-GI8-Pt-I-unsplash.jpg"
+                    src="https://i.ibb.co.com/gLJR8Nmn/wes-hicks-4-Ee-Tna-C1-S4-unsplash.jpgc"
                     alt="Learning"
                     fill
                     className="rounded-[2rem] object-cover transform transition duration-700 group-hover:scale-105"
@@ -130,7 +130,7 @@ const Banner = () => {
                 <div className="absolute -inset-1 bg-linear-to-r from-primary to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                 <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-video lg:aspect-square">
                   <Image
-                    src="https://i.ibb.co.com/fGyDbwvR/annie-spratt-x-KJUn-Fwfz3s-unsplash.jpg"
+                    src="https://i.ibb.co.com/tpkPpPRx/wonderlane-b9-od-Qi5o-Do-unsplash.jpg"
                     alt="Learning"
                     fill
                     className="rounded-[2rem] object-cover transform transition duration-700 group-hover:scale-105"
@@ -191,7 +191,7 @@ const Banner = () => {
                 <div className="absolute -inset-1 bg-linear-to-r from-primary to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                 <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden aspect-video lg:aspect-square">
                   <Image
-                    src="https://i.ibb.co.com/HD2PNgRt/nick-morrison-FHnnjk1-Yj7-Y-unsplash.jpg"
+                    src="https://i.ibb.co.com/pjjqqvcw/brooke-cagle-g1-Kr4-Ozfoac-unsplash.jpg"
                     alt="Learning"
                     fill
                     className="rounded-[2rem] object-cover transform transition duration-700 group-hover:scale-105"

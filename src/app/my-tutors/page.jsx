@@ -3,7 +3,9 @@ import { EditModalMyTutor } from "@/components/EditModal";
 import { Table } from "@heroui/react";
 
 const MyTutorPage = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/newTutors`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/newTutors`, {
+    cache: "no-store",
+  });
   const tutors = await res.json();
 
   return (
@@ -59,11 +61,11 @@ const MyTutorPage = async () => {
                     </p>
                   </Table.Cell>
 
+                  {/* <Table.Cell />
                   <Table.Cell />
                   <Table.Cell />
                   <Table.Cell />
-                  <Table.Cell />
-                  <Table.Cell />
+                  <Table.Cell /> */}
                 </Table.Row>
               )}
             </Table.Body>

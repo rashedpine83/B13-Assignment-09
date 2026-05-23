@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   FieldError,
@@ -52,12 +53,15 @@ export function EditModalMyTutor({ tutor }) {
       tutorData.startTime,
     )} - ${formatTime(tutorData.endTime)}`;
 
+    const { data: tokenData } = await authClient.token();
+
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${_id}`,
         {
           method: "PATCH",
           headers: {
+            authorization: `Bearer ${tokenData?.token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(tutorData),

@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
 
 import { IoTrashBin } from "react-icons/io5";
@@ -8,19 +9,24 @@ export function DeleteAlert({ tutor }) {
   const { tutorName, _id } = tutor;
 
   const handleDelete = async () => {
+    const { data: tokenData } = await authClient.token();
     try {
       await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/newTutors/${_id}`, {
         method: "DELETE",
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`,
+        },
       });
 
       await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${_id}`, {
         method: "DELETE",
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`,
+        },
       });
 
       window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (
