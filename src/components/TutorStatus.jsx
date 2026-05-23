@@ -44,7 +44,6 @@ const statsData = [
 export default function TutorStats() {
   return (
     <section className="relative overflow-hidden py-20 bg-gradient-to-r from-[#171d4b] via-[#2a2159] to-[#4a1f58]">
-      {/* Background Glow */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-10 left-10 w-3 h-3 bg-white rounded-full"></div>
         <div className="absolute top-24 left-72 w-2 h-2 bg-white rounded-full"></div>
@@ -63,14 +62,12 @@ export default function TutorStats() {
                 key={item.id}
                 className={`bg-gradient-to-br ${item.bg} border border-white/10 rounded-3xl p-7 flex items-center gap-5 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)] hover:border-white/20 group`}
               >
-                {/* Icon */}
                 <div
                   className={`w-20 h-20 rounded-2xl border ${item.border} flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}
                 >
                   <Icon className={`${item.iconColor} w-9 h-9`} />
                 </div>
 
-                {/* Content */}
                 <div>
                   <h2 className="text-4xl font-extrabold text-white leading-none">
                     {item.number}

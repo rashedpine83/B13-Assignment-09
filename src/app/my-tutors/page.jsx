@@ -60,12 +60,6 @@ const MyTutorPage = async () => {
                       No tutor available
                     </p>
                   </Table.Cell>
-
-                  {/* <Table.Cell />
-                  <Table.Cell />
-                  <Table.Cell />
-                  <Table.Cell />
-                  <Table.Cell /> */}
                 </Table.Row>
               )}
             </Table.Body>

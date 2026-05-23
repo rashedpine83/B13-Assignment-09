@@ -57,7 +57,6 @@ const TutorDetails = async ({ params }) => {
     { icon: Clock, label: availableTime },
     { icon: MdEventAvailable, label: availableDays },
     { icon: FaLocationDot, label: location },
-    { icon: Users, label: `${tutor?.enrolled || 0} Students` },
   ];
 
   return (

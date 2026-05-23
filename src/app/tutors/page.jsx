@@ -33,19 +33,19 @@ const TutorsPage = async ({ searchParams }) => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors">
       <TutorHeader />
 
       <main className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
-          <h2 className="text-3xl font-bold flex items-center gap-2 text-[#0c2461]">
+          <h2 className="text-3xl font-bold flex items-center gap-2 text-[#0c2461] dark:text-white">
             <BiBookOpen className="w-6 h-6 text-[#D4A017]" />
             All Tutors
           </h2>
         </div>
 
         {tutors?.length === 0 ? (
-          <div className="text-center text-slate-500 py-12">
+          <div className="text-center text-slate-500 dark:text-slate-300 py-12">
             No tutors found matching your criteria.
           </div>
         ) : (

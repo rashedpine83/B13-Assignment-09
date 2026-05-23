@@ -55,13 +55,16 @@ export function BookingModal({ tutor }) {
       status: "pending",
       bookingDate: new Date(),
     };
-
+    const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            authorization: `Bearer ${tokenData?.token}`,
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(bookingData),
         },
       );

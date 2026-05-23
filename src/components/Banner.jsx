@@ -4,12 +4,10 @@ import { ArrowRight, Star, Play } from "lucide-react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-// import required modules
 import { Pagination, Navigation } from "swiper/modules";
 import { BsFacebook } from "react-icons/bs";
 import Link from "next/link";
@@ -18,7 +16,7 @@ import { IoLogoYoutube } from "react-icons/io";
 
 const Banner = () => {
   return (
-    <section className="relative overflow-hidden pt-12 pb-24 md:pt-24 md:pb-32  from-blue-50 via-slate-50 to-slate-50">
+    <section className="relative overflow-hidden pt-12 pb-24 md:pt-24 md:pb-32  from-blue-50 via-slate-50 to-slate-50 ">
       <Swiper
         navigation
         pagination={true}

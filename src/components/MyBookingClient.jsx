@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button, Table, Modal } from "@heroui/react";
 import { X } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export default function MyBookingClient({ bookings: initialBookings }) {
   const [bookings, setBookings] = useState(initialBookings || []);
@@ -11,11 +12,13 @@ export default function MyBookingClient({ bookings: initialBookings }) {
 
   // CANCEL BOOKING (PATCH)
   const handleCancel = async () => {
+    const { data: tokenData } = await authClient.token();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${selectedId}`,
       {
         method: "PATCH",
         headers: {
+          authorization: `Bearer ${tokenData?.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ status: "canceled" }),

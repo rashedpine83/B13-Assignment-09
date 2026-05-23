@@ -78,6 +78,7 @@ export function EditModalMyTutor({ tutor }) {
         {
           method: "PATCH",
           headers: {
+            authorization: `Bearer ${tokenData?.token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(tutorData),
@@ -331,14 +332,14 @@ export function EditModalMyTutor({ tutor }) {
                       <Button
                         slot="close"
                         variant="secondary"
-                        className="transition-transform duration-300 group-hover:scale-105 rounded-none w-full text-white bg-linear-to-r from-[#8B6508] to-[#D4A017]"
+                        className="transition-transform duration-300 group-hover:scale-103 rounded-none w-full text-white bg-linear-to-r from-[#8B6508] to-[#D4A017]"
                       >
                         Cancel
                       </Button>
                       <Button
                         type="submit"
                         slot="close"
-                        className="transition-transform duration-300 group-hover:scale-105 rounded-none w-full text-white bg-linear-to-r from-[#8B6508] to-[#D4A017]"
+                        className="transition-transform duration-300 group-hover:scale-103 rounded-none w-full text-white bg-linear-to-r from-[#8B6508] to-[#D4A017]"
                       >
                         Save
                       </Button>
