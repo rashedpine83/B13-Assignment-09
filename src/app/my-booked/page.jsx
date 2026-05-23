@@ -1,5 +1,6 @@
 import MyBookingClient from "@/components/MyBookingClient";
 import { auth } from "@/lib/auth";
+import { authClient } from "@/lib/auth-client";
 import { headers } from "next/headers";
 
 const MyBookingPage = async () => {

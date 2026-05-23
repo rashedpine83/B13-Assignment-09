@@ -16,7 +16,7 @@ const TutorHeader = () => {
           at your own pace with flexible online and offline sessions.
         </p>
 
-        <div className="max-w-2xl mx-auto pt-4">
+        <div className="w-full mx-auto pt-4">
           <SearchBar />
         </div>
       </div>

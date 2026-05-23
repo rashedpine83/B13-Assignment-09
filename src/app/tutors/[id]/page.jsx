@@ -3,14 +3,22 @@ import Image from "next/image";
 import { Clock, Users } from "lucide-react";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdEventAvailable } from "react-icons/md";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const TutorDetails = async ({ params }) => {
   const { id } = await params;
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors/${id}`,
     {
-      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     },
   );
 

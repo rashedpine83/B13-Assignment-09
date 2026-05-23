@@ -33,10 +33,13 @@ const AddTutorPage = () => {
       tutorData.startTime,
     )} - ${formatTime(tutorData.endTime)}`;
 
+    const { data: tokenData } = await authClient.token();
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/tutors`, {
         method: "POST",
         headers: {
+          authorization: `Bearer ${tokenData?.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(tutorData),

@@ -2,9 +2,12 @@ import TutorCard from "@/components/TutorCard";
 import TutorHeader from "@/components/TutorHeader";
 import { BiBookOpen } from "react-icons/bi";
 
-const fetchTutors = async (search = "") => {
+// Shamosto dynamic queries automatic control hobe
+const fetchTutors = async (queries = {}) => {
+  const queryString = new URLSearchParams(queries).toString();
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors?search=${search}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/tutors?${queryString}`,
     {
       cache: "no-store",
     },
@@ -16,14 +19,18 @@ const fetchTutors = async (search = "") => {
 
   return res.json();
 };
+
 const TutorsPage = async ({ searchParams }) => {
-  const search = await searchParams;
+  const params = await searchParams;
 
   let tutors = [];
 
   try {
-    tutors = await fetchTutors(search?.search);
-  } catch (error) {}
+    // Pure parameters mapping pass hoche (search, start ar close date shoho)
+    tutors = await fetchTutors(params);
+  } catch (error) {
+    console.error(error);
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -37,11 +44,17 @@ const TutorsPage = async ({ searchParams }) => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tutors?.map((tutor) => (
-            <TutorCard key={tutor._id} tutor={tutor} />
-          ))}
-        </div>
+        {tutors?.length === 0 ? (
+          <div className="text-center text-slate-500 py-12">
+            No tutors found matching your criteria.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tutors?.map((tutor) => (
+              <TutorCard key={tutor._id} tutor={tutor} />
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );
