@@ -60,76 +60,107 @@ const TutorDetails = async ({ params }) => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-        {/* LEFT SIDE */}
-        <div className="lg:col-span-2 space-y-8">
-          <div className="relative group overflow-hidden rounded-[2.5rem] shadow-2xl aspect-video">
-            <Image src={photo} alt={tutorName} fill className="object-cover" />
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+          {/* LEFT SIDE */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* IMAGE */}
+            <div className="relative group overflow-hidden rounded-[2.5rem] shadow-2xl aspect-video border border-slate-200 dark:border-slate-800">
+              <Image
+                src={photo}
+                alt={tutorName}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* NAME */}
+            <div>
+              <h1 className="text-4xl font-black text-slate-900 dark:text-white">
+                {tutorName}
+              </h1>
+
+              <p className="text-xl text-slate-500 dark:text-slate-400">
+                {subject}
+              </p>
+            </div>
+
+            {/* FEATURE ITEMS */}
+            <div className="flex flex-wrap gap-4 pt-6 border-t border-slate-200 dark:border-slate-800">
+              {featuredItems.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 bg-slate-100 dark:bg-slate-900 px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-800"
+                >
+                  <item.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <span className="text-slate-700 dark:text-slate-200">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div>
-            <h1 className="text-4xl font-black text-slate-900">{tutorName}</h1>
+          {/* RIGHT SIDE */}
+          <div className="sticky top-24 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-2xl shadow-xl space-y-6 transition-colors">
+            {/* PRICE */}
+            <div>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Hourly Price
+              </p>
 
-            <p className="text-xl text-slate-500">{subject}</p>
+              <span className="text-4xl font-black text-blue-600 dark:text-blue-400">
+                ${price}
+              </span>
+            </div>
+
+            {/* INFO */}
+            <div className="space-y-3 text-slate-600 dark:text-slate-300">
+              <p>
+                <b className="text-slate-900 dark:text-white">Institution:</b>{" "}
+                {institution}
+              </p>
+
+              <p>
+                <b className="text-slate-900 dark:text-white">Experience:</b>{" "}
+                {experience}
+              </p>
+
+              <p>
+                <b className="text-slate-900 dark:text-white">Teaching Mode:</b>{" "}
+                {teachingMode}
+              </p>
+
+              <p>
+                <b className="text-slate-900 dark:text-white">Session Start:</b>{" "}
+                {formatDate(sessionStartDate)}
+              </p>
+
+              <p>
+                <b className="text-slate-900 dark:text-white">Session Close:</b>{" "}
+                {formatDate(sessionCloseDate)}
+              </p>
+
+              <p>
+                <b className="text-slate-900 dark:text-white">
+                  Remaining Slot:
+                </b>{" "}
+                {totalSlot}
+              </p>
+
+              {totalSlot === 0 && (
+                <p className="text-red-500 font-semibold">No Slot Available</p>
+              )}
+
+              {isSessionClosed && (
+                <p className="text-red-500 font-semibold">Session Closed</p>
+              )}
+            </div>
+
+            {/* BUTTON */}
+            <BookingModal tutor={tutor} disabled={isBookingDisabled} />
           </div>
-
-          <div className="flex flex-wrap gap-4 pt-6 border-t">
-            {featuredItems.map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-2 bg-slate-100 px-5 py-3 rounded-xl"
-              >
-                <item.icon className="w-5 h-5 text-blue-600" />
-                <span>{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className="sticky top-24 bg-white p-8 rounded-2xl shadow-xl space-y-6">
-          <div>
-            <p className="text-sm text-slate-500">Hourly Price</p>
-
-            <span className="text-4xl font-black text-blue-600">${price}</span>
-          </div>
-
-          <div className="space-y-2 text-slate-600">
-            <p>
-              <b>Institution:</b> {institution}
-            </p>
-
-            <p>
-              <b>Experience:</b> {experience}
-            </p>
-
-            <p>
-              <b>Teaching Mode:</b> {teachingMode}
-            </p>
-
-            <p>
-              <b>Session Start:</b> {formatDate(sessionStartDate)}
-            </p>
-
-            <p>
-              <b>Session Close:</b> {formatDate(sessionCloseDate)}
-            </p>
-
-            <p>
-              <b>Remaining Slot:</b> {totalSlot}
-            </p>
-
-            {totalSlot === 0 && (
-              <p className="text-red-500 font-semibold">No Slot Available</p>
-            )}
-
-            {isSessionClosed && (
-              <p className="text-red-500 font-semibold">Session Closed</p>
-            )}
-          </div>
-
-          <BookingModal tutor={tutor} disabled={isBookingDisabled} />
         </div>
       </div>
     </div>
