@@ -5,7 +5,7 @@ const Features = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/features`);
   const tutors = await res.json();
   return (
-    <div className="dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 py-16 transition-colors">
+    <div className=" border-b border-slate-200 ">
       <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 ">
         <h2 className="text-4xl font-bold mb-8 text-center text-[#0c2461]">
           Powerful Features for Smarter Learning with{" "}
